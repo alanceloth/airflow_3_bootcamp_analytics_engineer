@@ -10,5 +10,5 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 8080
 USER root
 # ajuste de permissões se necessário…
-USER airflow
+USER astro
 ENTRYPOINT ["/entrypoint.sh"]
