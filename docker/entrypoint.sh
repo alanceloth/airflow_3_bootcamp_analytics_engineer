@@ -31,18 +31,9 @@ done
 echo "Executando migrations do Airflow..."
 airflow db migrate
 
-# Cria usuário admin (idempotente)
-: "${AIRFLOW_ADMIN_USERNAME:=admin}"
-: "${AIRFLOW_ADMIN_PASSWORD:=admin}"
-: "${AIRFLOW_ADMIN_EMAIL:=admin@example.com}"
-
-airflow users create \
-  --role Admin \
-  --username "$AIRFLOW_ADMIN_USERNAME" \
-  --password "$AIRFLOW_ADMIN_PASSWORD" \
-  --firstname Admin \
-  --lastname User \
-  --email "$AIRFLOW_ADMIN_EMAIL" || true
+# Observação: a imagem atual não expõe o grupo 'airflow users'.
+echo "Pulando criação de usuário admin (CLI 'airflow users' indisponível nesta imagem)."
+echo "Se necessário, defina AIRFLOW__WEBSERVER__AUTHENTICATE=False para testar sem login."
 
 # Inicia o scheduler em segundo plano
 echo "Iniciando scheduler..."
@@ -50,5 +41,5 @@ airflow scheduler &
 
 # Inicia o webserver em primeiro plano
 PORT="${PORT:-8080}"
-echo "Iniciando webserver na porta ${PORT}..."
-exec airflow webserver --port "$PORT"
+echo "Iniciando api-server na porta ${PORT}..."
+exec airflow api-server --port "$PORT"
