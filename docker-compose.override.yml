@@ -1,0 +1,7 @@
+services:
+  scheduler:
+    volumes:
+      - ./dbt/bootcamp_dw:/usr/local/airflow/dbt/bootcamp_dw
+  dag-processor:
+    volumes:
+      - ./dbt/bootcamp_dw:/usr/local/airflow/dbt/bootcamp_dw
